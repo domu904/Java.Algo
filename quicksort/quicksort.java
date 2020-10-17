@@ -1,5 +1,5 @@
 package quicksort;
 
-public class quicksort {
+class quicksort {
     
 }
