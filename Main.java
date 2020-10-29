@@ -43,10 +43,10 @@ class Result {
         for (String sn : serialNumber) {
             if (sn.length() >= 10 && sn.length() <= 12) {
                 // System.out.println("Lenght match: "+ sn.length());
-                System.out.println("Substring: "+ sn.substring(3, 7));
+                // System.out.println("Substring: "+ sn.substring(3, 7));
                 // System.out.println("Last Letter is: "+ sn.substring(sn.length()-1));
                 
-                if (sn.substring(0, 3).matches("[A-Z]+") && sn.substring(sn.length() - 1).matches("[A-Z]+") && sn
+                if (sn.substring(0, 3).matches("[A-Z]+") && isLetterDistinct(sn.substring(0,3)) && sn.substring(sn.length() - 1).matches("[A-Z]+") && sn
                         .substring(3, 7).matches("\\d+") ) {
                     String value = sn.substring(7, sn.length() -1); 
                     System.out.println("match found: " + value);
@@ -59,6 +59,33 @@ class Result {
         }
 
         return sum;
+    }
+
+    public static boolean isLetterDistinct(String str) {
+        for (int i = 0; i < str.length(); i++)
+            for (int j = i + 1; j < str.length(); j++)
+                if (str.charAt(i) == str.charAt(j))
+                    return false;
+
+        return true;
+    }
+
+    public static boolean isInclusiveYear(String str) {
+        for (int i = 0; i < str.length(); i++)
+            for (int j = i + 1; j < str.length(); j++)
+                if (str.charAt(i) == str.charAt(j))
+                    return false;
+
+        return false;
+    }
+
+    public static boolean isValidCurrency(String str) {
+        for (int i = 0; i < str.length(); i++)
+            for (int j = i + 1; j < str.length(); j++)
+                if (str.charAt(i) == str.charAt(j))
+                    return false;
+
+        return false;
     }
 
 }
