@@ -15,69 +15,96 @@ class Main {
     public static void main(String[] args) {
         System.out.println("Hello World!");
 
-        List<String> serialNumber = new ArrayList<String>();
-        serialNumber.add("AVG190420T");
-        serialNumber.add("RTF20001000Z");
-        serialNumber.add("QWER201850G");
-        serialNumber.add("AFA199620E");
-        
+        List<Integer> list = new ArrayList<Integer>();
+        list.add(13);
+        list.add(10);
+        list.add(21);
+        list.add(20);
 
-        int result = Result.countCounterfeit(serialNumber);
+        int result = Result.moves(list);
         System.out.println("The result is " + result);
     }
 }
 
 class Result {
 
-    public static int countCounterfeit(List<String> serialNumber) {
-        System.out.println("In Counterfeit");
-        ArrayList<Integer> currDenomination = new ArrayList<>(Arrays.asList(10, 20, 50, 100, 200, 500, 1000));
+    public static int moves(List<Integer> arr) {
+        //System.out.println("In moves");
 
-        // for (Integer cd : currDenomination) {
-        //     //System.out.println("Currency Denomination: " + cd);
-        // }
-
-
+        boolean isSwap = false;
         int sum = 0;
+        int ptr1 = 0;
+        int ptr2 = 0;
+        int[] midPoint = findMidPoint(arr);
+        int midIndex = 0;
+        if(midPoint.length == 1){
+            midIndex = midPoint[0];
+        }
+        else {
+            midIndex = midPoint[1];
+        }
 
-        for (String sn : serialNumber) {
-            if (sn.length() >= 10 && sn.length() <= 12) {
-                // System.out.println("Lenght match: "+ sn.length());
-                // System.out.println("Substring: "+ sn.substring(3, 7));
-                // System.out.println("Last Letter is: "+ sn.substring(sn.length()-1));
-                
-                if (sn.substring(0, 3).matches("[A-Z]+") && isLetterDistinct(sn.substring(0,3)) && sn.substring(sn.length() - 1).matches("[A-Z]+") && sn
-                        .substring(3, 7).matches("\\d+") ) {
-                    String value = sn.substring(7, sn.length() -1); 
-                    System.out.println("match found: " + value);
-                    sum += Integer.parseInt(value);
-                }
-                else {
-                    System.out.println("match NOT found");
+
+        for (int i = 0; i < arr.size(); i++) {
+            if(arr.get(i) % 2 != 0 && i != midIndex ) {
+                System.out.println("In if1 : " + midIndex);
+                ptr1 = i;
+            
+                for (int j = arr.size() - 1; j >= midIndex; j--) {
+                    if (arr.get(j) % 2 == 0 ) {
+                        System.out.println("In if2 : " + j);
+                        ptr2 = j;
+                        isSwap = true;
+                    }
+
+                    if (isSwap) {
+                        swap(arr, ptr1, ptr2);
+                        isSwap = false;
+                        sum++;
+                        break;
+
+                    }
                 }
             }
+            
         }
 
         return sum;
     }
 
-    public static boolean isLetterDistinct(String str) {
-        for (int i = 0; i < str.length(); i++)
-            for (int j = i + 1; j < str.length(); j++)
-                if (str.charAt(i) == str.charAt(j))
-                    return false;
+    public static int[] findMidPoint(List<Integer> arr) {
+        int[] a;
+        if (arr.size() % 2 == 0) {
+            // even-length array (two middle elements)
+            a = new int[2];
+            a[0] = (arr.size() / 2) - 1;
+            a[1] = arr.size() / 2;
 
-        return true;
+            // System.out.println("In findMidPoint: " + ((arr.size() / 2)));
+        } else {
+            // odd-length array (only one middle element)
+            a = new int[1];
+            a[0] = arr.size() / 2;
+        }
+        return a;
     }
 
-    public static boolean isInclusiveYear(String str) {
-        
-        return false;
+    public static void swap(List<Integer> arr, int i, int j) {
+        int temp = arr.get(i);
+        arr.set(i, arr.get(j));
+        arr.set(j, temp);
     }
 
-    public static boolean isValidCurrency(String str) {
+    public static boolean sortedChecker(List<Integer> arr) {
+        boolean isSorted = false;
+        int[] midPoint = findMidPoint(arr);
 
-        return false;
+        for (int i = 0; i < arr.size(); i++) {
+
+        }
+
+        return isSorted;
     }
+    
 
 }
